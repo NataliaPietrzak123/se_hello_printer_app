@@ -10,3 +10,7 @@ script:
   - make lint
   - make docker_build
   - make docker_push
+deploy:
+  provider: heroku
+  app: dry-bayou-38045
+  api_key: ${HEROKU_API_KEY}
