@@ -1,4 +1,5 @@
 import unittest
+import json
 from hello_world import app
 from hello_world.formater import SUPPORTED
 
@@ -14,4 +15,11 @@ class FlaskrTestCase(unittest.TestCase):
 
     def test_msg_with_output(self):
         rv = self.app.get('/?output=json')
-        self.assertEquals('{ "imie":"Justyna", "mgs":"Hello World!"}', rv.data)
+        j = json.loads(rv.data)
+        self.assertEquals(j['imie'], "Justyna")
+        self.assertEquals(j['msg'], "Hello World!")
+
+    def test_msg_with_output_xml(self):
+        rv = self.app.get('/?output=xml')
+        self.assertEquals('<greetings>\n<name>Justyna</name>\n' +
+                          '<msg>Hello World!</msg>\n</greetings>', rv.data)
